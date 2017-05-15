@@ -94,6 +94,10 @@ public class Main extends GUI {
             PreparedStatement $statement = this.$db.prepareStatement("SELECT id, code, name, document, birthday, height, status FROM person ORDER BY id ASC");
             ResultSet $resultSet = $statement.executeQuery();
 
+            for (int $rows = this.$tmPerson.getRowCount(); $rows > 0; $rows--) {
+                this.$tmPerson.removeRow(0);
+            }
+
             while ($resultSet.next()) {
                 Object[] $object = new Object[5];
                 $object[0] = $resultSet.getObject("code");
@@ -101,7 +105,7 @@ public class Main extends GUI {
                 $object[2] = $resultSet.getObject("document");
                 $object[3] = $resultSet.getObject("birthday");
                 $object[4] = $resultSet.getObject("height");
-                
+
                 this.$tmPerson.addRow($object);
             }
         } catch (SQLException $exception) {
