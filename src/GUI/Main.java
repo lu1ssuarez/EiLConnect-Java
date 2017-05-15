@@ -2,6 +2,7 @@ package GUI;
 
 import DB.Postgres;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -14,6 +15,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * @author EiL
@@ -23,6 +26,8 @@ public class Main extends GUI {
     JLabel $jlID, $jlName, $jlDocument, $jlBirthDate, $jlHeight, $jlConnectStatus;
     JTextField $jtfID, $jtfName, $jtfDocument, $jtfBirthDate, $jtfHeight;
     JButton $jbRegister;
+    DefaultTableModel $tmPerson;
+    JTable $jTable;
 
     private Connection $db;
 
@@ -40,6 +45,7 @@ public class Main extends GUI {
         this.$db = $db.verify($jlConnectStatus);
 
         this._get_unique_id();
+        this._get_persons();
     }
 
     public String _get_unique_id() {
@@ -80,13 +86,35 @@ public class Main extends GUI {
         }
 
         this._get_unique_id();
+        this._get_persons();
+    }
+
+    public void _get_persons() {
+        try {
+            PreparedStatement $statement = this.$db.prepareStatement("SELECT id, code, name, document, birthday, height, status FROM person ORDER BY id ASC");
+            ResultSet $resultSet = $statement.executeQuery();
+
+            while ($resultSet.next()) {
+                Object[] $object = new Object[5];
+                $object[0] = $resultSet.getObject("code");
+                $object[1] = $resultSet.getObject("name");
+                $object[2] = $resultSet.getObject("document");
+                $object[3] = $resultSet.getObject("birthday");
+                $object[4] = $resultSet.getObject("height");
+                
+                this.$tmPerson.addRow($object);
+            }
+        } catch (SQLException $exception) {
+            $jlConnectStatus.setToolTipText($exception.getMessage());
+            $jlConnectStatus.setForeground(Color.RED);
+        }
     }
 
     public void _build_gui() {
         this.$jlID = this._jLabel("ID:");
         this.$jlID.setBounds(15, 10, 300, 30);
         this.add(this.$jlID);
-        
+
         this.$jtfID = this._jTextField(null);
         this.$jtfID.setBounds(120, 10, 200, 30);
         this.$jtfID.setEditable(false);
@@ -136,6 +164,18 @@ public class Main extends GUI {
                 _register_person();
             }
         });
+
+        this.$tmPerson = new DefaultTableModel();
+        this.$tmPerson.addColumn("Código");
+        this.$tmPerson.addColumn("Nombre");
+        this.$tmPerson.addColumn("C.I.");
+        this.$tmPerson.addColumn("Fecha Nac.");
+        this.$tmPerson.addColumn("Altura");
+
+        this.$jTable = new JTable(this.$tmPerson);
+        this.$jTable.setBounds(350, 35, 400, 350);
+        this.$jTable.setFont(new Font("Calibri", 0, 12));
+        this.add(this.$jTable);
     }
 
 }
