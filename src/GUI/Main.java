@@ -21,7 +21,7 @@ import javax.swing.JButton;
 public class Main extends GUI {
 
     JLabel $jlID, $jlName, $jlDocument, $jlBirthDate, $jlHeight, $jlConnectStatus;
-    JTextField $jtfName, $jtfDocument, $jtfBirthDate, $jtfHeight;
+    JTextField $jtfID, $jtfName, $jtfDocument, $jtfBirthDate, $jtfHeight;
     JButton $jbRegister;
 
     private Connection $db;
@@ -54,7 +54,7 @@ public class Main extends GUI {
                 $jlIDUnique = "U" + (($IDUnique > 9) ? $IDUnique : "0" + $IDUnique);
             }
 
-            this.$jlID.setText("ID: " + $jlIDUnique);
+            this.$jtfID.setText($jlIDUnique);
         } catch (SQLException $exception) {
             $jlConnectStatus.setToolTipText($exception.getMessage());
             $jlConnectStatus.setForeground(Color.RED);
@@ -83,9 +83,14 @@ public class Main extends GUI {
     }
 
     public void _build_gui() {
-        this.$jlID = this._jLabel(null);
+        this.$jlID = this._jLabel("ID:");
         this.$jlID.setBounds(15, 10, 300, 30);
         this.add(this.$jlID);
+        
+        this.$jtfID = this._jTextField(null);
+        this.$jtfID.setBounds(120, 10, 200, 30);
+        this.$jtfID.setEditable(false);
+        this.add(this.$jtfID);
 
         this.$jlConnectStatus = this._jLabel(null);
         this.$jlConnectStatus.setBounds(650, 10, 300, 30);
