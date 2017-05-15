@@ -180,6 +180,7 @@ public class Main extends GUI {
         this.$jTable.setBounds(350, 35, 400, 350);
         this.$jTable.setFont(new Font("Calibri", 0, 12));
         this.add(this.$jTable);
+        
     }
 
 }
