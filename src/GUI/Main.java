@@ -72,7 +72,7 @@ public class Main extends GUI {
             $statement.setDate(4, Date.valueOf(this.$jtfBirthDate.getText()));
             $statement.setFloat(5, Float.parseFloat($jtfHeight.getText()));
             $statement.setBoolean(6, true);
-            
+
             $statement.executeQuery();
         } catch (SQLException $exception) {
             $jlConnectStatus.setToolTipText($exception.getMessage());
@@ -124,7 +124,6 @@ public class Main extends GUI {
 
         this.$jbRegister = this._jButton("Registrar");
         this.add(this.$jbRegister);
-
         this.$jbRegister.addActionListener(new ActionListener() {
 
             @Override
