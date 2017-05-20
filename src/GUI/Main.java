@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -132,6 +134,25 @@ public class Main extends GUI {
         this.add(this.$jlName);
 
         this.$jtfName = this._jTextField(null);
+        this.$jtfName.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                char $key = ke.getKeyChar();
+                
+                if (!Character.isLetter($key) && $key != KeyEvent.VK_SPACE && $key != KeyEvent.VK_BACK_SPACE) {
+                    ke.consume();
+                    getToolkit().beep();
+                }
+                
+            }
+
+            @Override
+            public void keyPressed(KeyEvent ke) {}
+
+            @Override
+            public void keyReleased(KeyEvent ke) {}
+        });
         this.add(this.$jtfName);
 
         this.$jlDocument = this._jLabel("Cédula:");
@@ -140,6 +161,25 @@ public class Main extends GUI {
 
         this.$jtfDocument = this._jTextField(null);
         this.$jtfDocument.setBounds(120, 90, 200, 30);
+        this.$jtfDocument.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                char $key = ke.getKeyChar();
+                
+                if (!Character.isDigit($key) && $key != KeyEvent.VK_BACK_SPACE) {
+                    ke.consume();
+                    getToolkit().beep();
+                }
+                
+            }
+
+            @Override
+            public void keyPressed(KeyEvent ke) {}
+
+            @Override
+            public void keyReleased(KeyEvent ke) {}
+        });
         this.add(this.$jtfDocument);
 
         this.$jlBirthDate = this._jLabel("Fecha naci...:");
@@ -149,6 +189,25 @@ public class Main extends GUI {
 
         this.$jtfBirthDate = this._jTextField(null);
         this.$jtfBirthDate.setBounds(120, 140, 200, 30);
+        this.$jtfBirthDate.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                char $key = ke.getKeyChar();
+                
+                if (!Character.isDigit($key) && $key != KeyEvent.VK_BACK_SPACE) {
+                    ke.consume();
+                    getToolkit().beep();
+                }
+                
+            }
+
+            @Override
+            public void keyPressed(KeyEvent ke) {}
+
+            @Override
+            public void keyReleased(KeyEvent ke) {}
+        });
         this.add(this.$jtfBirthDate);
 
         this.$jlHeight = this._jLabel("Altura:");
